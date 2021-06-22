@@ -1,10 +1,5 @@
-package com.cognizant.model;
+package com.cognizant.dto;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -14,18 +9,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
+
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class User {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
-	@NotBlank(message = "Username is required")
+@AllArgsConstructor
+public class SignupRequest {
+	@NotBlank(message = "username cannot be blank")
 	private String username;
-	@NotBlank(message = "Password is required")
+	@NotBlank(message = "password cannot be blank")
 	private String password;
 	@Email
 	private String email;
@@ -34,4 +25,5 @@ public class User {
 	private long mobileno;
 	@NotBlank(message = "Address cannot be blank")
 	private String address;
+
 }

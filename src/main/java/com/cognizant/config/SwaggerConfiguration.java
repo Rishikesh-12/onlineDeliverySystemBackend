@@ -28,8 +28,8 @@ public class SwaggerConfiguration {
 	}
 
 	private ApiInfo apiInfo() {
-		return new ApiInfoBuilder().title("Rishikesh Mishra").description("API refernece for developers")
-				.termsOfServiceUrl("http://www.google.co.in").contact("rishikeshmishra205@gmail.com").license("MIIT Licence")
+		return new ApiInfoBuilder().title("Online Food Delivery").description("API refernece for developers")
+				.termsOfServiceUrl("http://www.google.co.in").license("MIIT Licence")
 				.licenseUrl("rishikeshmishra205@gmail.com").version("0.0.1").build();
 	}
 }

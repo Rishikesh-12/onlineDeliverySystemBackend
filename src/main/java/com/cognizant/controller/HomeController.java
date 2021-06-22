@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cognizant.dto.LoginRequest;
+import com.cognizant.dto.SignupRequest;
+import com.cognizant.exception.SignupException;
 import com.cognizant.model.MenuItem;
 import com.cognizant.model.User;
 import com.cognizant.service.MenuService;
@@ -24,33 +26,34 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @RequestMapping("/api")
 public class HomeController {
-	
+
 	private final MenuService menuService;
 	private final UserService userService;
-	
+
 	@PostMapping("/signup")
-	public ResponseEntity<String> signup(@RequestBody User user){
-		userService.signup(user);
-		return new ResponseEntity<>("Account created successfully",HttpStatus.CREATED);
+	public ResponseEntity<String> signup(@RequestBody SignupRequest signupRequest) throws SignupException {
+		boolean creationStatus = userService.signup(signupRequest);
+		if (creationStatus)
+			return new ResponseEntity<>("Account created successfully", HttpStatus.CREATED);
+		else
+			return new ResponseEntity<>("Username already exists", HttpStatus.BAD_REQUEST);
 	}
-	
+
 	@PostMapping("/login")
-	public boolean login(@RequestBody LoginRequest loginRequest){
+	public boolean login(@RequestBody LoginRequest loginRequest) {
 		boolean flag = userService.login(loginRequest);
 		return flag;
 	}
-	
-	
+
 	@GetMapping("/menu")
-	public ResponseEntity<List<MenuItem>> menu(){
+	public ResponseEntity<List<MenuItem>> menu() {
 		List<MenuItem> menuList = menuService.getMenuList();
-		return new ResponseEntity<>(menuList,HttpStatus.OK);
+		return new ResponseEntity<>(menuList, HttpStatus.OK);
 	}
-	
+
 	@PostMapping("/menu")
-	public ResponseEntity<String> addMenuItem(@RequestBody MenuItem menuItem){
+	public ResponseEntity<String> addMenuItem(@RequestBody MenuItem menuItem) {
 		menuService.addMenuItem(menuItem);
 		return new ResponseEntity<>("Menu item added", HttpStatus.CREATED);
 	}
-	
 }
